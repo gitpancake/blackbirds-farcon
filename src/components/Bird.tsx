@@ -8,32 +8,26 @@ export const Bird = () => {
   const [birdImage, setBirdImage] = useState("/assets/bird-black.svg");
 
   const randomBird = useCallback(async () => {
-    const random = Math.random();
+    setLoaded(false); // fade out
+    await new Promise((r) => setTimeout(r, 5000));
 
-    setLoaded(false);
+    setBirdImage(Math.random() < 0.75 ? "/assets/bird-white.svg" : "/assets/bird-black.svg");
 
-    await new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(true);
-      }, 5000);
-    });
-
-    if (random < 0.75) {
-      setBirdImage("/assets/bird-white.svg");
-    } else {
-      setBirdImage("/assets/bird-black.svg");
-    }
-
-    setLoaded(true);
+    setLoaded(true); // fade in
   }, []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      randomBird();
-    }, Math.random() * 15000 + 1000);
+    const id = setInterval(randomBird, Math.random() * 15000 + 1000);
+    return () => clearInterval(id);
+  }, [randomBird]);
 
-    return () => clearInterval(interval);
-  }, []);
-
-  return <Image src={birdImage} width={1920} height={1080} alt="Blackbird logo" className={`ease-in-out transition-all duration-5000 p-2 ${loaded ? "opacity-100" : "opacity-0"}`} />;
+  return (
+    <Image
+      src={birdImage}
+      width={1920}
+      height={1080}
+      alt="Blackbird logo"
+      className={`ease-[cubic-bezier(0.37,0,0.63,1)] transition-opacity duration-[4s] p-2 will-change-opacity ${loaded ? "opacity-100" : "opacity-0"}`}
+    />
+  );
 };
