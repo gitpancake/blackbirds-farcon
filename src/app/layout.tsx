@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: "Blackbird - Farcon Birds",
     description: "A generative display of Blacbirds, for Faron 2025",
     url: "https://blackbird-farcon.vercel.app",
-    images: ["/assets/opengraph.png"],
+    images: ["https://blackbird-farcon.vercel.app/assets/opengraph.png"],
   },
 };
 
