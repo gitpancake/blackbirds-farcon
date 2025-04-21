@@ -21,11 +21,11 @@ export const Bird = () => {
       requestAnimationFrame(() => {
         requestAnimationFrame(() => setLoaded(true));
       });
-    }, 4000); // ⬅️ matches your 4‑second fade‑out
+    }, 2000); // ⬅️ matches your 4‑second fade‑out
   }, []);
 
   useEffect(() => {
-    const id = setInterval(randomBird, Math.random() * 15000 + 1000);
+    const id = setInterval(randomBird, Math.random() * 5000 + 1000);
     return () => clearInterval(id);
   }, [randomBird]);
 
@@ -38,7 +38,7 @@ export const Bird = () => {
       alt="Blackbird logo"
       className={`
         transition-opacity
-        duration-[4s]
+        duration-[2s]
         ease-[cubic-bezier(0.37,0,0.63,1)]
         will-change-opacity
         p-2
