@@ -13,7 +13,7 @@ export const Bird = () => {
     // wait for the fade‑out to finish
     setTimeout(() => {
       // 2️⃣ swap the source
-      const nextSrc = Math.random() < 0.75 ? "/assets/bird-white.svg" : "/assets/bird-black.svg";
+      const nextSrc = Math.random() < 0.5 ? "/assets/bird-white.svg" : "/assets/bird-black.svg";
       setBirdImage(nextSrc);
 
       /* 3️⃣ let the new <img> paint once at opacity‑0,
