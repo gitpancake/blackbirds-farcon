@@ -4,16 +4,24 @@ import { useCallback, useEffect, useState } from "react";
 
 export const Bird = () => {
   const [loaded, setLoaded] = useState(true);
-
   const [birdImage, setBirdImage] = useState("/assets/bird-black.svg");
 
-  const randomBird = useCallback(async () => {
-    setLoaded(false); // fade out
-    await new Promise((r) => setTimeout(r, 5000));
+  const randomBird = useCallback(() => {
+    // 1️⃣ fade out the current bird
+    setLoaded(false);
 
-    setBirdImage(Math.random() < 0.75 ? "/assets/bird-white.svg" : "/assets/bird-black.svg");
+    // wait for the fade‑out to finish
+    setTimeout(() => {
+      // 2️⃣ swap the source
+      const nextSrc = Math.random() < 0.75 ? "/assets/bird-white.svg" : "/assets/bird-black.svg";
+      setBirdImage(nextSrc);
 
-    setLoaded(true); // fade in
+      /* 3️⃣ let the new <img> paint once at opacity‑0,
+             then start the fade‑in on the very next frame   */
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => setLoaded(true));
+      });
+    }, 4000); // ⬅️ matches your 4‑second fade‑out
   }, []);
 
   useEffect(() => {
@@ -23,11 +31,19 @@ export const Bird = () => {
 
   return (
     <Image
+      key={birdImage} // make React replace <img> each time
       src={birdImage}
       width={1920}
       height={1080}
       alt="Blackbird logo"
-      className={`ease-[cubic-bezier(0.37,0,0.63,1)] transition-opacity duration-[4s] p-2 will-change-opacity ${loaded ? "opacity-100" : "opacity-0"}`}
+      className={`
+        transition-opacity
+        duration-[4s]
+        ease-[cubic-bezier(0.37,0,0.63,1)]
+        will-change-opacity
+        p-2
+        ${loaded ? "opacity-100" : "opacity-0"}
+      `}
     />
   );
 };
