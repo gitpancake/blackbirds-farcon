@@ -5,7 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 export const Bird = () => {
   const [loaded, setLoaded] = useState(true);
 
-  const [birdImage, setBirdImage] = useState("/assets/bird-white.svg");
+  const [birdImage, setBirdImage] = useState("/assets/bird-black.svg");
 
   const randomBird = useCallback(async () => {
     const random = Math.random();
@@ -19,9 +19,9 @@ export const Bird = () => {
     });
 
     if (random < 0.75) {
-      setBirdImage("/assets/bird-black.svg");
-    } else {
       setBirdImage("/assets/bird-white.svg");
+    } else {
+      setBirdImage("/assets/bird-black.svg");
     }
 
     setLoaded(true);
