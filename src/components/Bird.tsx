@@ -3,9 +3,9 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 export const Bird = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
 
-  const [birdImage, setBirdImage] = useState("/assets/bird-black.svg");
+  const [birdImage, setBirdImage] = useState("/assets/bird-white.svg");
 
   const randomBird = useCallback(async () => {
     const random = Math.random();
@@ -15,10 +15,10 @@ export const Bird = () => {
     await new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      }, 1000);
+      }, 5000);
     });
 
-    if (random < 0.5) {
+    if (random < 0.75) {
       setBirdImage("/assets/bird-black.svg");
     } else {
       setBirdImage("/assets/bird-white.svg");
@@ -28,14 +28,12 @@ export const Bird = () => {
   }, []);
 
   useEffect(() => {
-    randomBird();
-
     const interval = setInterval(() => {
       randomBird();
-    }, Math.random() * 5000 + 1000);
+    }, Math.random() * 15000 + 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  return <Image src={birdImage} width={24} height={24} alt="Blackbird logo" className={`ease-in-out transition-all duration-1000 ${loaded ? "opacity-100" : "opacity-0"}`} />;
+  return <Image src={birdImage} width={1920} height={1080} alt="Blackbird logo" className={`ease-in-out transition-all duration-5000 p-2 ${loaded ? "opacity-100" : "opacity-0"}`} />;
 };
